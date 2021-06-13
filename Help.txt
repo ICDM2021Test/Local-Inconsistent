@@ -7,21 +7,18 @@ The software contains implementations of seven major functions:
 (6) opt_mcn_ss: training mixture of cutset networks using LCN-LIS algorithm, when no evidence variables is presented.
 (7) opt_mcn_ss_evid: training mixture of cutset networks using LCN-LIS algorithm, when evidence varaibles are presented.
 
-Results of our experimental study are presented in the folder 'results'.
 
 ----------------------------------------HELP----------------------------------------------
 -dir              The directory of input dataset
 -data_name        The name of the dataset
 -n_components     The number of components in mixture of cutset networks
--max_iter         The maximun iterations to stop training mixture of cutset networks as P
+-max_iter         The maximun iterations to stop (only used when training mixture of cutset networks as P)
 -epsilon          The training stop criteria (only used when training mixture of cutset networks as P)
 -depth            The depth of cutset network
 -mcn_dir          The directory where P is stored or going to be stored
--perturb_rate        The maximun depth when training a set of cutset networks
--std                A hyper parameter, used to tune the percentage of MAP intractable model
-                     statistic used when train CNxd and CNR. 0<=a<=1.0
--lam                A hyper parameter, adjust a by number_of_records_left / total_records.
-                    Now only support 'root', 'linear' and square'
+-perturb_rate     The percentage of parameters replaced in Q by a random number.
+-std              The standard deviation of a Gaussian noise applied to the local statistics
+-lam              A hyper parameter that model the relative importance of the local and global statistics respectively
     
 
 
