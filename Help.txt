@@ -11,12 +11,12 @@ Results of our experimental study are presented in the folder 'results'.
 ----------------------------------------HELP----------------------------------------------
 -p                The program name
 -dir              The directory of input dataset
--dn               The name of the dataset
--ncomp            The number of components in mixture or bag
+-data_name        The name of the dataset
+-n_components     The number of components in mixture
 -max_iter         The maximun iterations to stop training (only used in mt)
--eps              The training stop criteria (only used in mt)
+-epsilon          The training stop criteria (only used in mixture of cnets)
 -depth            The depth of cutset network
--min_depth        The minimun depth when training a set of cutset networks
+-mcn_dir        The minimun depth when training a set of cutset networks
 -max_depth        The maximun depth when training a set of cutset networks
 -a                A hyper parameter, used to tune the percentage of MAP intractable model
                      statistic used when train CNxd and CNR. 0<=a<=1.0
@@ -43,27 +43,21 @@ Results of our experimental study are presented in the folder 'results'.
     
 
 
-Module training examples:
-1) Learning Chow_Liu tree:
-    python main.py -p 'clt' -dir  '../dataset/'  -dn  'nltcs'
-2) Learning Mixture of Chow_Liu tree:
-    python main.py -p 'mt' -dir  '../dataset/'  -dn  'nltcs' -ncomp   5  -max_iter   100   -eps   1e-7 -output_dir '../output/mt/'
-3) Learning Bags of Cutset networks
-    python main.py -p 'bcnet'  -dir   '../dataset/'   -dn   'nltcs'  -ncomp   5 -max_depth 5  -sp   0 -dp 0 -input_dir '../output/mt/' -input_module 'nltcs_5' -output_dir '../output/bcnet/'
-4) Learning Cutset Network from Data
-    python main.py -p 'cn' -dir  '../dataset/'  -dn  'nltcs'  -max_depth   10   -output_dir '../output/cn/'
-5) Learning CNxD
-    python main.py -p 'cnxd'  -dir   '../dataset/'   -dn   'nltcs'  -a  0.5  -f  'root' -min_depth 1 -max_depth 5  -input_dir '../output/mt/' -input_module 'nltcs_5' -output_dir '../output/cnxd/nltcs/'
-6) Learning Random Cutset Network (CNR): structure is random while parameters are learnt  
-    i) Get the structure
-        python main.py -p 'cnr' -dir   '../dataset/'   -dn   'nltcs'   -t 'structure' -min_depth 1 -max_depth 10 -output_dir '../output/cnr/'
-    ii) learn parameters
-        python main.py -p 'cnr' -dir   '../dataset/'   -dn   'nltcs'   -t 'parm' -depth 4 -input_dir '../output/mt/' -input_module 'nltcs_5' -output_dir '../output/cnr/'
+Example of training Mixture of CNET as P:
+  python MCN.py -dir '../dataset/' -data_name 'nltcs' -n_components 3 -max_iter 1000 -epsilon 1e-6 -mcn_dir '../mcn_output/'
+  
+Example of running algorithm LCN-LIS
+  (1)R is Chow-Liu tree, no evidence variables present
+      python opt_clt_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/' -perturb_rate 0 -std 0.1 -lam 0.5
+  (2)R is Chow-Liu tree, evidences varaibles are presented
+      python opt_cnet_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -depth 3 -perturb_rate 0 -std 0.1 -lam 0.5
+  (3)R is cutset networks, no evidence variables present
+      python opt_cnet_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -depth 3 -perturb_rate 0 -std 0.1 -lam 0.5
+  (4)R is cutset networks, evidences varaibles are presented
+      python opt_cnet_ss_evid.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -depth 3 -epercnet 0.5 -perturb_rate 0 -std 0.1 -lam 0.5
+  (5)R is mixture of cutset networks, no evidence variables present
+      python opt_mcn_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -n_components 3 -perturb_rate 0 -std 0.1 -lam 0.5
+  (6)R is mixture of cutset networks, evidences varaibles are presented
+      python opt_mcn_ss_evid.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -n_components 3 -epercnet 0.5 -perturb_rate 0 -std 0.1 -lam 0.5
 
 
-MAP inference examples:
-    python main.py -p 'map' -dir   '../dataset/'   -dn   'nltcs'  -t 'cnxd' -depth 5 -e 0.2 -seq 0 -efile '../efile/nltcs_evid_20.txt' -input_dir '../output/cnxd/' -input_module 'nltcs_5' -output_dir '../map/cnxd/'
-    python main.py -p 'map' -dir   '../dataset/'   -dn   'nltcs'  -t 'cn' -depth 5 -e 0.2 -seq 0 -efile '../efile/nltcs_evid_20.txt' -input_dir '../output/cn/' -input_module 'nltcs' -output_dir '../map/cn/'
-    python main.py -p 'map' -dir   '../dataset/'   -dn   'nltcs'  -t 'cnr' -depth 4 -e 0.2 -seq 0 -efile '../efile/nltcs_evid_20.txt' -input_dir '../output/cnr/' -input_module 'nltcs_4' -output_dir '../map/cnr/'
-    python main.py -p 'map' -dir   '../dataset/'   -dn   'nltcs'  -t 'mt' -e 0.2 -seq 0 -efile '../efile/nltcs_evid_20.txt' -input_dir '../output/mt/' -input_module 'nltcs_5' -output_dir '../map/mt/'
-    python main.py -p 'map' -dir   '../dataset/'   -dn   'nltcs'  -t 'bcnet' -e 0.2 -seq 0 -efile '../efile/nltcs_evid_20.txt' -input_dir '../output/bcnet/' -input_module 'nltcs' -output_dir '../map/bcnet/'
