@@ -1,10 +1,11 @@
-The software contains implementations of six algorithms:
-(1) CLTs: Chow-Liu Trees (Chow and Liu, 1968)
-(2) MTs: Mixtures of Trees (Algorithm by Meila and Jordan, 2000)
-(3) CNs: Cutset networks learned from data (Algorithm by Rahman et al. 2014)
-(4) BCNs: Bags of Cutset networks (Algorithm by Rahman et al. 2016, Di Mauro et al. 2015)
-(5) CNxDs: Cutset networks via compilation from MTs or BCNs and data (Read the paper in folder 'results')
-(6) CNRs: Randomly generated deep CN structures with parameters learned from BCNs or MTs.
+The software contains implementations of seven major functions:
+(1) MCN: Learn mixture of cutset networks as P
+(2) opt_clt_ss: training Chow-Liu tree using LCN-LIS algorithm, when no evidence variables is presented.
+(3) opt_clt_ss_evid: training Chow-Liu tree using LCN-LIS algorithm, when evidence varaibles are presented.
+(4) opt_cnet_ss: training cutset networks using LCN-LIS algorithm, when no evidence variables is presented.
+(5) opt_cnet_ss_evid: training cutset networks using LCN-LIS algorithm, when evidence varaibles are presented.
+(6) opt_mcn_ss: training mixture of cutset networks using LCN-LIS algorithm, when no evidence variables is presented.
+(7) opt_mcn_ss_evid: training mixture of cutset networks using LCN-LIS algorithm, when evidence varaibles are presented.
 
 Results of our experimental study are presented in the folder 'results'.
 
@@ -29,9 +30,9 @@ Example of training Mixture of CNET as P:
 
 Before running algorithm LCN-LIS, make sure model P is already trained.
 Example of running algorithm LCN-LIS
-  (1)R is Chow-Liu tree, no evidence variables present
+  (1)R is Chow-Liu tree, no evidence variables is presented
       python opt_clt_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/' -perturb_rate 0 -std 0.1 -lam 0.5
-  (2)R is Chow-Liu tree, evidences varaibles are presented
+  (2)R is Chow-Liu tree, evidence varaibles are presented
       python opt_cnet_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -depth 3 -perturb_rate 0 -std 0.1 -lam 0.5
   (3)R is cutset networks, no evidence variables present
       python opt_cnet_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/'  -depth 3 -perturb_rate 0 -std 0.1 -lam 0.5
