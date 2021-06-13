@@ -9,43 +9,25 @@ The software contains implementations of six algorithms:
 Results of our experimental study are presented in the folder 'results'.
 
 ----------------------------------------HELP----------------------------------------------
--p                The program name
 -dir              The directory of input dataset
 -data_name        The name of the dataset
--n_components     The number of components in mixture
--max_iter         The maximun iterations to stop training (only used in mt)
--epsilon          The training stop criteria (only used in mixture of cnets)
+-n_components     The number of components in mixture of cutset networks
+-max_iter         The maximun iterations to stop training mixture of cutset networks as P
+-epsilon          The training stop criteria (only used when training mixture of cutset networks as P)
 -depth            The depth of cutset network
--mcn_dir        The minimun depth when training a set of cutset networks
--max_depth        The maximun depth when training a set of cutset networks
--a                A hyper parameter, used to tune the percentage of MAP intractable model
+-mcn_dir          The directory where P is stored or going to be stored
+-perturb_rate        The maximun depth when training a set of cutset networks
+-std                A hyper parameter, used to tune the percentage of MAP intractable model
                      statistic used when train CNxd and CNR. 0<=a<=1.0
--f                A hyper parameter, adjust a by number_of_records_left / total_records.
+-lam                A hyper parameter, adjust a by number_of_records_left / total_records.
                     Now only support 'root', 'linear' and square'
--sp               The 'OR' nodes selection option.
-                    Only used in 'Bag of CNets (bcnet)', could be 0 or 1.
-                    0 means optimaly select OR node using MI; 
-                    1 means select OR node from 0.5 percent of all variables
--dp               The depth_option. 
-                    Only used in 'Bag of CNets (bcnet)', could be 0,1 or 2 
-                    0 means all cnets have the same depth (max depth)
-                    1 means the depth of cnets are randomly choosing from 1 to 6
-                    2 means the depht of cnets are choosed seqencially from 1 to 6
--t                Type
-                    'structure' or 'parm' when learning CNR
-                    'cnxd', 'cn', 'cnr', 'mt', 'bcnet' during MAP inference
--e                The percentage of evidence variables
--seq              The index of which set of evidence is used
--input_dir        The directory of MAP intractable module used in training CNxD or CNR
--input_module     The MAP intractable module used in training CNxD or CNR
--output_dir       The output dir to store the trained modules
--efile            The full path of evidence files
     
 
 
 Example of training Mixture of CNET as P:
   python MCN.py -dir '../dataset/' -data_name 'nltcs' -n_components 3 -max_iter 1000 -epsilon 1e-6 -mcn_dir '../mcn_output/'
-  
+
+Before running algorithm LCN-LIS, make sure model P is already trained.
 Example of running algorithm LCN-LIS
   (1)R is Chow-Liu tree, no evidence variables present
       python opt_clt_ss.py -dir '../dataset/' -data_name 'nltcs' -mcn_dir '../mcn_output/' -perturb_rate 0 -std 0.1 -lam 0.5
