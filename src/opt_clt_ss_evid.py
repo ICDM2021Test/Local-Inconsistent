@@ -388,7 +388,7 @@ def main_opt_clt():
         '''
         ### Load the trained mixture of clt, consider as P
         '''
-        print ('Start reloading MT...')
+        #print ('Start reloading MT...')
         #mt_dir =  '../mt_output/'
         reload_mix_clt = load_mt(mt_dir, data_name)
         non_evid_size = non_evid_var.shape[0]

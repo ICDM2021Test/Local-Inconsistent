@@ -617,7 +617,7 @@ def main_opt_mt():
         '''
         ### Load the trained mixture of clt, consider as P
         '''
-        print ('Start reloading MT...')
+        #print ('Start reloading MT...')
         #mt_dir =  'mt_output/'
         reload_mix_clt = load_mt(mt_dir, data_name)
         
@@ -704,7 +704,7 @@ def main_opt_mt():
     '''
     Q Learn from dataset
     '''
-    print ('-------------- Mixture of trees Learn from partial data: (Q) ----------')
+    #print ('-------------- Mixture of trees Learn from partial data: (Q) ----------')
     mt_Q = MIXTURE_CLT()
     mt_Q.learnStructure(half_data, n_components)
     mt_Q.EM(half_data, max_iter, epsilon)
@@ -729,7 +729,7 @@ def main_opt_mt():
     
 
     
-    print ('-------------- Mixture of trees Learn Learn from P and Q using samples: (R) ----------')
+    #print ('-------------- Mixture of trees Learn Learn from P and Q using samples: (R) ----------')
     mt_R = copy.deepcopy(mt_Q)
     
     '''construct junction tree list for R'''

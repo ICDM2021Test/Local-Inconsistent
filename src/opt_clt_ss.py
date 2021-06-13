@@ -208,7 +208,7 @@ def main_opt_clt():
         '''
         ### Load the trained mixture of clt, consider as P
         '''
-        print ('Start reloading MT...')
+        #print ('Start reloading MT...')
         reload_mix_clt = load_mt(mt_dir, data_name)
         
         # Set information for MT
